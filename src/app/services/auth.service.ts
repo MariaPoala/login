@@ -49,7 +49,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://127.0.0.1:8000/api/token/'; // URL de la API de login
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   // Método para hacer login
   login(usuario: string, password: string): Observable<any> {
@@ -68,6 +68,14 @@ export class AuthService {
 
   // Verificar si el usuario está autenticado
   isLoggedIn(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    // Opcional: Decodificar el token para verificar su expiración
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const currentTime = Math.floor(Date.now() / 1000);
+    return payload.exp > currentTime;
+    
     return !!this.getToken();
   }
 

@@ -3,7 +3,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "types": ["jasmine", "node"],
+    "types": ["jasmine"],
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es2015",
